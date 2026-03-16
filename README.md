@@ -31,9 +31,14 @@ house-price-fastapi-ml/
 |-- data/
 |   `-- housing_lk.csv
 |-- models/
-|   `-- .gitkeep
+|   |-- .gitkeep
+|   `-- house_price_pipeline.joblib
 |-- notebooks/
-|   `-- .gitkeep
+|   |-- .gitkeep
+|   |-- housing_eda.ipynb
+|   `-- EDA Outputs/
+|       |-- Correlation Heatmap - Numerical Features.png
+|       `-- Relationship between selected numerical features and target.png
 |-- src/
 |   |-- __init__.py
 |   |-- preprocess.py
@@ -85,15 +90,29 @@ Run the test suite:
 pytest
 ```
 
+## Exploratory Data Analysis (EDA)
+Notebook:
+- `notebooks/housing_eda.ipynb`
+
+Saved visual outputs:
+- `notebooks/EDA Outputs/Correlation Heatmap - Numerical Features.png`
+- `notebooks/EDA Outputs/Relationship between selected numerical features and target.png`
+
+### Correlation Heatmap - Numerical Features
+![Correlation Heatmap - Numerical Features](notebooks/EDA%20Outputs/Correlation%20Heatmap%20-%20Numerical%20Features.png)
+
+### Relationship Between Selected Numerical Features And Target
+![Relationship between selected numerical features and target](notebooks/EDA%20Outputs/Relationship%20between%20selected%20numerical%20features%20and%20target.png)
+
 Open docs in browser:
 - Swagger UI: `http://127.0.0.1:8000/docs`
 - ReDoc: `http://127.0.0.1:8000/redoc`
 
 ## API Endpoints
 - `GET /`
-	- Health check endpoint that confirms the service is running.
+  - Health check endpoint that confirms the service is running.
 - `POST /predict`
-	- Accepts house features and returns predicted house price in LKR.
+  - Accepts house features and returns predicted house price in LKR.
 
 ## Example Prediction Request
 ```json
