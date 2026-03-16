@@ -22,12 +22,22 @@ This project demonstrates a baseline approach to predicting `price_lkr` from lis
 - Uvicorn
 - pytest
 
+## Data Source
+- Kaggle dataset: [House Prices in Sri Lanka](https://www.kaggle.com/datasets/dewminimnaadi/house-prices-in-sri-lanka)
+- Local dataset file used in this project: `data/housing_lk.csv`
+
+### About Dataset
+Sri Lanka Synthetic Real Estate Dataset (20,000 Listings)
+
+This dataset contains 20,000 synthetically generated real estate listings representing properties across districts in Sri Lanka. It is designed to provide a realistic but fully artificial dataset for practicing data analysis, visualization, and machine learning techniques, particularly in the context of house price prediction and property market analytics.
+
 ## Project Structure
 ```text
 house-price-fastapi-ml/
 |
 |-- api/
-|   `-- main.py
+|   |-- main.py
+|   `-- Basic app.jpg
 |-- data/
 |   `-- housing_lk.csv
 |-- models/
@@ -89,6 +99,9 @@ For quick manual testing, open the built-in UI:
 - `http://127.0.0.1:8000/app`
 
 This page lets you enter feature values and get a predicted price without using Swagger or curl.
+
+### App Preview
+![Basic App Preview](api/Basic%20app.jpg)
 
 ## Running Tests
 Run the test suite:
