@@ -54,6 +54,7 @@ def load_and_split(data_path: str, target_column: str, test_size: float, random_
     df = load_data(data_path)
     print(f"[train] Dataset shape: {df.shape}")
 
+    # Keep target handling centralized via preprocess helper functions.
     X, y = split_features_target(df, target_column)
     return train_test_split(X, y, test_size=test_size, random_state=random_state)
 
@@ -77,6 +78,7 @@ def build_pipeline(X_train) -> Pipeline:
     preprocessor = build_preprocessor(numeric_features, categorical_features)
     model = build_model(random_state=RANDOM_STATE)
 
+    # Single artifact: preprocessing + model in one deployable pipeline.
     return Pipeline(steps=[
         ("preprocessor", preprocessor),
         ("model", model),
@@ -91,6 +93,7 @@ def evaluate(pipeline: Pipeline, X_test, y_test) -> None:
         X_test: Test feature matrix.
         y_test: Ground-truth target values for the test split.
     """
+    # Predictions are made on raw features; pipeline handles transformations internally.
     y_pred = pipeline.predict(X_test)
     mae = mean_absolute_error(y_test, y_pred)
     rmse = math.sqrt(mean_squared_error(y_test, y_pred))

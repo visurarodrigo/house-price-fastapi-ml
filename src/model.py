@@ -27,6 +27,7 @@ def build_model(random_state: int = 42, n_estimators: int = 200) -> RandomForest
     return RandomForestRegressor(
         n_estimators=n_estimators,
         random_state=random_state,
+        # Use all available CPU cores for faster baseline training.
         n_jobs=-1,
     )
 

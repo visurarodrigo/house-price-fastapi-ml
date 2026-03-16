@@ -47,14 +47,18 @@ def health_check() -> dict[str, str]:
 def predict_house_price(payload: HouseFeatures) -> dict[str, float]:
 	"""Predict house price from request payload and return value in LKR."""
 	try:
+		# Convert validated Pydantic model into a plain dict expected by src.predict.
 		features = payload.model_dump()
 		predicted_price = predict_price(features)
 		return {"predicted_price_lkr": predicted_price}
 	except FileNotFoundError as exc:
+		# Model artifact is missing; this is a server setup issue.
 		raise HTTPException(status_code=500, detail=str(exc)) from exc
 	except ValueError as exc:
+		# Bad payload content or inference-time validation issue.
 		raise HTTPException(status_code=400, detail=str(exc)) from exc
 	except Exception as exc:
+		# Fallback to avoid leaking internal details to API clients.
 		raise HTTPException(
 			status_code=500,
 			detail="Unexpected server error during prediction.",

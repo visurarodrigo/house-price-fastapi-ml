@@ -26,6 +26,7 @@ VALID_PAYLOAD = {
 
 def test_root_endpoint_returns_200() -> None:
     """GET / should return a healthy status and message."""
+    # Lightweight smoke test to verify the API process is reachable.
     response = client.get("/")
 
     assert response.status_code == 200
@@ -34,6 +35,7 @@ def test_root_endpoint_returns_200() -> None:
 
 def test_predict_endpoint_with_valid_payload_returns_prediction() -> None:
     """POST /predict with a valid payload should return a numeric prediction."""
+    # Mock model inference so this test does not depend on local artifact files.
     with patch("api.main.predict_price", return_value=61839550.97):
         response = client.post("/predict", json=VALID_PAYLOAD)
 
@@ -46,6 +48,7 @@ def test_predict_endpoint_with_valid_payload_returns_prediction() -> None:
 def test_predict_endpoint_with_invalid_payload_returns_validation_error() -> None:
     """POST /predict with missing required fields should fail validation."""
     invalid_payload = VALID_PAYLOAD.copy()
+    # Remove one required field to trigger Pydantic/FastAPI validation.
     invalid_payload.pop("district")
 
     response = client.post("/predict", json=invalid_payload)

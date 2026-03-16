@@ -58,6 +58,7 @@ def prepare_input(features: dict) -> pd.DataFrame:
     """
     if not features:
         raise ValueError("Feature dictionary must not be empty.")
+    # Model expects tabular input; wrap one request as a single-row DataFrame.
     return pd.DataFrame([features])
 
 
@@ -87,6 +88,7 @@ def predict_price(
     try:
         prediction = pipeline.predict(input_df)
     except Exception as exc:
+        # Normalize model/runtime errors into a clean ValueError for callers.
         raise ValueError(f"Prediction failed: {exc}") from exc
 
     return float(prediction[0])

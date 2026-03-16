@@ -38,6 +38,7 @@ def load_data(file_path: str) -> pd.DataFrame:
     if not path.exists():
         raise FileNotFoundError(f"Data file not found: {file_path}")
 
+    # Route loading logic by extension to keep I/O behavior explicit.
     suffix = path.suffix.lower()
     if suffix == ".csv":
         return pd.read_csv(path)
@@ -119,9 +120,11 @@ def build_preprocessor(
     if not numeric_features and not categorical_features:
         raise ValueError("No features provided to build_preprocessor().")
 
+    # Build only the transformers that are relevant for the current dataset.
     transformers: list[tuple[str, Pipeline, list[str]]] = []
 
     if numeric_features:
+        # Numeric flow: fill gaps, then scale for model-friendly feature ranges.
         numeric_pipeline = Pipeline(
             steps=[
                 ("imputer", SimpleImputer(strategy="median")),
@@ -131,6 +134,7 @@ def build_preprocessor(
         transformers.append(("num", numeric_pipeline, numeric_features))
 
     if categorical_features:
+        # Categorical flow: fill mode and encode safely for unseen labels at inference.
         categorical_pipeline = Pipeline(
             steps=[
                 ("imputer", SimpleImputer(strategy="most_frequent")),
