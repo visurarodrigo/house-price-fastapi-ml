@@ -1,6 +1,9 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+*.pyc
+*.pyo
+*.pyd
 *$py.class
 
 # Distribution / packaging
@@ -32,6 +35,7 @@ htmlcov/
 
 # Jupyter Notebook
 .ipynb_checkpoints/
+.ipynb_checkpoints
 
 # IDE / editor settings
 .vscode/
@@ -51,6 +55,13 @@ Thumbs.db
 models/*.pkl
 models/*.joblib
 models/*.onnx
+*.joblib
+*.pkl
+*.onnx
+*.h5
+*.pt
+*.pth
+*.ckpt
 logs/
 mlruns/
 artifacts/

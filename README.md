@@ -1,61 +1,144 @@
-# house-price-fastapi-ml
+# House Price FastAPI ML
 
-## Project Overview
-`house-price-fastapi-ml` is a portfolio project template for training and serving a house price prediction model with FastAPI.
-The repository is intentionally lightweight so you can build the full ML workflow incrementally.
+## Overview
+House Price FastAPI ML is an end-to-end tabular regression portfolio project that trains a house price prediction model and serves inference through a FastAPI application.
+
+The project emphasizes practical ML engineering patterns:
+- modular preprocessing and model code
+- a single serialized sklearn pipeline for inference
+- clean API contracts and test coverage
+
+## Business Problem
+Real-estate stakeholders often need quick, consistent property value estimates based on structured listing attributes.
+
+This project demonstrates a baseline approach to predicting `price_lkr` from listing features, then exposing that prediction via a lightweight REST API suitable for local deployment and extension.
+
+## Tech Stack
+- Python
+- pandas, numpy
+- scikit-learn
+- FastAPI
+- Pydantic
+- Uvicorn
+- pytest
 
 ## Project Structure
 ```text
 house-price-fastapi-ml/
 |
-|-- data/
-|-- notebooks/
-|-- src/
-|   |-- __init__.py
-|   |-- train.py
-|   |-- preprocess.py
-|   |-- model.py
-|   `-- predict.py
-|
 |-- api/
 |   `-- main.py
-|
+|-- data/
+|   `-- housing_lk.csv
 |-- models/
+|   `-- .gitkeep
+|-- notebooks/
+|   `-- .gitkeep
+|-- src/
+|   |-- __init__.py
+|   |-- preprocess.py
+|   |-- model.py
+|   |-- train.py
+|   `-- predict.py
 |-- tests/
-|   `-- __init__.py
-|
+|   |-- __init__.py
+|   `-- test_api.py
 |-- .gitignore
+|-- LICENSE
 |-- requirements.txt
 `-- README.md
 ```
 
-## Setup Instructions
+## Installation
 1. Create and activate a virtual environment.
-2. Install dependencies:
+2. Install dependencies.
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Training
-Training logic will be added in `src/train.py`.
-Use this module as the entry point for:
-- loading data
-- preprocessing features
-- fitting a model
-- saving artifacts to `models/`
+## Training The Model
+Dataset and target:
+- Dataset file: `data/housing_lk.csv`
+- Target column: `price_lkr`
+
+Run training:
+
+```bash
+python -m src.train
+```
+
+Training outputs:
+- Trained artifact: `models/house_price_pipeline.joblib`
 
 ## Running The API
-API setup will be defined in `api/main.py`.
-Run the FastAPI service with:
+Start the FastAPI app:
 
 ```bash
 uvicorn api.main:app --reload
 ```
 
+## Running Tests
+Run the test suite:
+
+```bash
+pytest
+```
+
+Open docs in browser:
+- Swagger UI: `http://127.0.0.1:8000/docs`
+- ReDoc: `http://127.0.0.1:8000/redoc`
+
+## API Endpoints
+- `GET /`
+	- Health check endpoint that confirms the service is running.
+- `POST /predict`
+	- Accepts house features and returns predicted house price in LKR.
+
+## Example Prediction Request
+```json
+{
+	"district": "Colombo",
+	"area": "Colombo 05",
+	"perch": 20,
+	"bedrooms": 4,
+	"bathrooms": 3,
+	"kitchen_area_sqft": 180,
+	"parking_spots": 2,
+	"has_garden": true,
+	"has_ac": true,
+	"water_supply": "Pipe-borne",
+	"electricity": "Three phase",
+	"floors": 2,
+	"year_built": 2015
+}
+```
+
+## Example Prediction Response
+```json
+{
+	"predicted_price_lkr": 61839550.97
+}
+```
+
+## Model Performance
+Baseline model performance on held-out test data:
+- MAE: about 1.77M LKR
+- RMSE: about 2.72M LKR
+- R2: 0.9583
+
+These metrics indicate strong baseline explanatory performance for this dataset, while still leaving room for robustness and calibration improvements.
+
+## Key Skills Demonstrated
+- Building modular ML components for preprocessing, training, and inference
+- Constructing and serializing a full sklearn pipeline
+- Serving model inference with FastAPI and Pydantic schemas
+- Implementing endpoint-level API tests with pytest and TestClient
+- Structuring an ML project repository for maintainability and portfolio presentation
+
 ## Future Improvements
-- Add robust preprocessing and feature engineering pipeline
-- Add model versioning and experiment tracking
-- Add request/response schemas and validation tests
-- Add CI pipeline for testing and linting
-- Add Docker support for containerized deployment
+- Add experiment tracking and model versioning
+- Add hyperparameter tuning and model comparison
+- Add data validation and drift monitoring checks
+- Add CI pipeline for linting, tests, and automated quality checks
+- Add containerization and cloud deployment workflow
