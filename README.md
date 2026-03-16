@@ -83,6 +83,13 @@ Start the FastAPI app:
 uvicorn api.main:app --reload
 ```
 
+## Basic Web Interface
+For quick manual testing, open the built-in UI:
+
+- `http://127.0.0.1:8000/app`
+
+This page lets you enter feature values and get a predicted price without using Swagger or curl.
+
 ## Running Tests
 Run the test suite:
 
@@ -111,6 +118,8 @@ Open docs in browser:
 ## API Endpoints
 - `GET /`
   - Health check endpoint that confirms the service is running.
+- `GET /app`
+	- Minimal browser interface for manual predictions.
 - `POST /predict`
   - Accepts house features and returns predicted house price in LKR.
 
