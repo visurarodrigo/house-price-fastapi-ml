@@ -93,6 +93,10 @@ Start the FastAPI app:
 uvicorn api.main:app --reload
 ```
 
+Open docs in browser:
+- Swagger UI: `http://127.0.0.1:8000/docs`
+- ReDoc: `http://127.0.0.1:8000/redoc`
+
 ## Basic Web Interface
 For quick manual testing, open the built-in UI:
 
@@ -123,10 +127,6 @@ Saved visual outputs:
 
 ### Relationship Between Selected Numerical Features And Target
 ![Relationship between selected numerical features and target](notebooks/EDA%20Outputs/Relationship%20between%20selected%20numerical%20features%20and%20target.png)
-
-Open docs in browser:
-- Swagger UI: `http://127.0.0.1:8000/docs`
-- ReDoc: `http://127.0.0.1:8000/redoc`
 
 ## API Endpoints
 - `GET /`
