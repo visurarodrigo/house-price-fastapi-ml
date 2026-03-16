@@ -55,13 +55,15 @@ def prediction_ui() -> str:
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>House Price Predictor</title>
 	<style>
+		* { box-sizing: border-box; }
 		body { font-family: Segoe UI, Arial, sans-serif; max-width: 900px; margin: 24px auto; padding: 0 16px; }
 		h1 { margin-bottom: 4px; }
 		p { margin-top: 0; color: #444; }
 		.helper { margin-top: -4px; margin-bottom: 8px; font-size: 13px; color: #666; }
-		.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+		.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+		.grid > div { min-width: 0; }
 		label { display: block; margin-bottom: 4px; font-size: 14px; }
-		input, select { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px; }
+		input, select { width: 100%; max-width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px; }
 		button { margin-top: 14px; padding: 10px 14px; border: none; border-radius: 6px; cursor: pointer; background: #0f62fe; color: #fff; }
 		.result { margin-top: 16px; font-size: 18px; font-weight: 600; }
 		@media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
