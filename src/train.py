@@ -17,7 +17,7 @@ from pathlib import Path
 
 import joblib
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import cross_val_score, train_test_split
 from sklearn.pipeline import Pipeline
 
 from src.model import build_model
@@ -130,6 +130,13 @@ def main() -> None:
     )
 
     pipeline = build_pipeline(X_train)
+
+    print("[train] Running 5-fold cross-validation (R²) on training set...")
+    cv_scores = cross_val_score(pipeline, X_train, y_train, cv=5, scoring="r2")
+    print("[train] ── Cross-validation (training set) ───────")
+    print(f"  R² mean: {cv_scores.mean():>15.4f}")
+    print(f"  R² std : {cv_scores.std():>15.4f}")
+    print("[train] ───────────────────────────────────────────")
 
     print("[train] Fitting pipeline...")
     pipeline.fit(X_train, y_train)

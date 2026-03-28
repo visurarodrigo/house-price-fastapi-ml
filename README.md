@@ -85,6 +85,10 @@ python -m src.train
 
 Training outputs:
 - Trained artifact: `models/house_price_pipeline.joblib`
+- Console metrics:
+	- 5-fold cross-validation on training data (`X_train`, `y_train`) using R²
+	- Mean and standard deviation of CV R² scores
+	- Final MAE, RMSE, and R² on the held-out test set
 
 ## Running The API
 Start the FastAPI app:
@@ -163,6 +167,10 @@ Saved visual outputs:
 ```
 
 ## Model Performance
+Evaluation is reported in two stages during training:
+- 5-fold cross-validation on the training split (`X_train`, `y_train`) with R² scoring
+- Final evaluation on the held-out test split (`X_test`, `y_test`)
+
 Baseline model performance on held-out test data:
 - MAE: about 1.77M LKR
 - RMSE: about 2.72M LKR
