@@ -1,12 +1,17 @@
+
 # House Price FastAPI ML
+
+[![CI/CD Pipeline](https://github.com/visurarodrigo/house-price-fastapi-ml/actions/workflows/ci.yml/badge.svg)](https://github.com/visurarodrigo/house-price-fastapi-ml/actions/workflows/ci.yml)
 
 ## Overview
 House Price FastAPI ML is an end-to-end tabular regression portfolio project that trains a house price prediction model and serves inference through a FastAPI application.
 
 The project emphasizes practical ML engineering patterns:
-- modular preprocessing and model code
-- a single serialized sklearn pipeline for inference
-- clean API contracts and test coverage
+- Modular preprocessing and model code
+- A single serialized sklearn pipeline for inference
+- Clean API contracts and test coverage
+- **Docker containerization for easy deployment**
+- **Automated CI/CD pipeline for code quality checks**
 
 ## Business Problem
 Real-estate stakeholders often need quick, consistent property value estimates based on structured listing attributes.
@@ -21,6 +26,7 @@ This project demonstrates a baseline approach to predicting `price_lkr` from lis
 - Pydantic
 - Uvicorn
 - pytest
+- **Docker**
 
 ## Data Source
 - Kaggle dataset: [House Prices in Sri Lanka](https://www.kaggle.com/datasets/dewminimnaadi/house-prices-in-sri-lanka)
@@ -58,6 +64,7 @@ house-price-fastapi-ml/
 |-- tests/
 |   |-- __init__.py
 |   `-- test_api.py
+|-- .github/workflows/ci.yml
 |-- .gitignore
 |-- LICENSE
 |-- requirements.txt
@@ -71,6 +78,22 @@ house-price-fastapi-ml/
 ```bash
 pip install -r requirements.txt
 ```
+
+## 🐳 Docker Setup
+This project is fully containerized. You can run the entire application without installing Python or libraries on your machine.
+
+### Build and Run
+```bash
+# Build the Docker image
+docker build -t house-price-api .
+
+# Run the container
+docker run -p 8000:8000 house-price-api
+```
+
+### Access
+- **API Documentation:** http://localhost:8000/docs
+- **Web UI:** http://localhost:8000/app
 
 ## Training The Model
 Dataset and target:
@@ -90,16 +113,12 @@ Training outputs:
 	- Mean and standard deviation of CV R² scores
 	- Final MAE, RMSE, and R² on the held-out test set
 
-## Running The API
-Start the FastAPI app:
+## Running The API (Local)
+If not using Docker, start the FastAPI app:
 
 ```bash
 uvicorn api.main:app --reload
 ```
-
-Open docs in browser:
-- Swagger UI: `http://127.0.0.1:8000/docs`
-- ReDoc: `http://127.0.0.1:8000/redoc`
 
 ## Basic Web Interface
 For quick manual testing, open the built-in UI:
@@ -183,11 +202,14 @@ These metrics indicate strong baseline explanatory performance for this dataset,
 - Constructing and serializing a full sklearn pipeline
 - Serving model inference with FastAPI and Pydantic schemas
 - Implementing endpoint-level API tests with pytest and TestClient
-- Structuring an ML project repository for maintainability and portfolio presentation
+- **Containerizing ML applications with Docker**
+- **Setting up CI/CD pipelines with GitHub Actions**
 
 ## Future Improvements
-- Add experiment tracking and model versioning
+- Add experiment tracking and model versioning (e.g., MLflow)
 - Add hyperparameter tuning and model comparison
 - Add data validation and drift monitoring checks
-- Add CI pipeline for linting, tests, and automated quality checks
-- Add containerization and cloud deployment workflow
+- Add automated model retraining pipeline triggered by new data
+- Deploy to a cloud platform (AWS/GCP) with monitoring
+
+Author - Visura Rodrigo
